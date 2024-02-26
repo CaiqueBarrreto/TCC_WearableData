@@ -1,0 +1,25 @@
+
+import pandas as pd
+file_path = "C:\Users\U217963\OneDrive - Eastman Chemical Company\conta X\Desktop\pessoais\ESPM\TCC ESPM\SP_TEMP.xlsx" df pd.read_excel (file_path)
+df["Data"]
+pd.to_datetime(df["Data"])
+df["Year"] = df["Data"].dt.year
+avg_temp - df["TEMPERATURA DO AR - BULBO SECO, HORARIA (°C)"].mean()
+# Corrected to use curly braces to define a dictionary
+results_by_year = 0
+for year in 2019, 2020, 2021, 2022, 2023]:
+df year - df[df["Year"]
+year]
+avg_temp_byyear = df_year ["TEMPERATURA DO AR BULBO SECO, HORARIA (°C)"].mean()
+top_range avg_temp_byyear + 5
+bottom_range- avg_temp_byyear
+outliers_mask_new ~df_year["TEMPERATURA DO AR BULBO SECO, HORARIA (°C)"].between (bottom_range, top_range)
+outliersdays outliers_mask_new.sum()
+results_by_year [year] = {
+}
+'AVG TEMP: avg_temp_byyear,
+'OUTLIERS: outliersdays
+# Print the results
+for year, results in results_by_year.items():
+print("\nResults for (year):")
+print(f"Average Temperature: (results['AVG TEMP']}") print(f"Number of Outliers: (results['OUTLIERS']}")
