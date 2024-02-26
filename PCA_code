@@ -1,0 +1,30 @@
+import pandas as pd
+
+dataset = r"C:\Users\U217963\OneDrive - Eastman Chemical Company\dataset_PCA_TCC.xlsx"
+df = pd.read_excel(dataset)
+
+weather_mapping = {
+    'Mayormente nublado': 5,
+    'Soleado': 9,
+    'Nublado': 6,
+    'Parcialmente nublado': 7,
+    'Llovizna débil': 3,
+    'Despejado': 8,
+    'Bruma/Niebla': 4,
+    'Lluvia débil': 2,
+    'Chubascos en la área': 1
+}
+
+df['Weather'] = df['Weather'].map(weather_mapping)
+data = df[['start time', 'Date', 'exercise type TYPE', 'exercise duration (min)', 'total_calorie', 'Weather', 'UV', 'Temp']]
+df['start time'] = pd.to_datetime(df['start time'])
+df['year'] = df['start time'].dt.year
+df['month'] = df['start time'].dt.month
+df['day'] = df['start time'].dt.day
+df = df.drop('start time', axis=1)
+data_ADJUSTED = df[['year', 'month', 'day', 'Date', 'exercise type TYPE', 'exercise duration (min)', 'total_calorie', 'Weather', 'UV', 'Temp']]
+df = df.drop('exercise type TYPE', axis=1)
+data_ADJUSTED2 = df[['year', 'month', 'day', 'Date', 'exercise duration (min)', 'total_calorie', 'Weather', 'UV', 'Temp']]
+
+dataset_PCA_TCC_ADJ = r"C:\Users\U217963\OneDrive - Eastman Chemical Company\conta X\Desktop\dataset_PCA_TCC_ADJ(2024).xlsx"
+data_ADJUSTED2.to_excel(dataset_PCA_TCC_ADJ, index=False, engine='xlsxwriter')
