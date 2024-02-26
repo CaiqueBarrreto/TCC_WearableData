@@ -1,0 +1,52 @@
+import pandas as pd
+
+# Input file path
+file_path = r"C:\Users\U217963\OneDrive - Eastman Chemical Company\EXTERNAL_samsunghealth_export - Copy.xlsx"
+
+# First dataframe
+sheet_name1 = 'com samsung shealth exercise 20'
+df1 = pd.read_excel(file_path, sheet_name1, header=2)
+df1 = df1.drop([1, 2])
+
+exercise_type_TYPE = {
+    1001: 'Walking',
+    1002: 'Runnig',
+    15002: 'weight training',
+    15006: 'Cycling',
+    11007: 'Cycling',
+    14001: 'Swimming',
+    15003: 'Cycling',
+    0: 'Nothing'
+}
+
+df1['com.samsung.health.exercise.exercise_type'] = df1['com.samsung.health.exercise.exercise_type'].map(exercise_type_TYPE)
+
+
+def extract_first_10_chars(value):
+       if isinstance(value, str):
+           return value[:10]
+       else:
+           return value
+
+
+
+
+column_position = 33
+
+df1.iloc[:, column_position] = df1.iloc[:, column_position].apply(extract_first_10_chars)
+
+# Second dataframe
+sheet_name2 = 'com samsung shealth exercise we'
+df2 = pd.read_excel(file_path, sheet_name2, header=2)
+df2 = df2.drop([1, 2])
+
+# Output file path
+output_file_path = r"C:\Users\U217963\OneDrive - Eastman Chemical Company\consolidated_output.xlsx"
+
+# Create ExcelWriter object
+with pd.ExcelWriter(output_file_path, engine='xlsxwriter') as writer:
+    # Write each dataframe to a separate sheet
+    df1.to_excel(writer, sheet_name='Sheet1', index=False)
+    df2.to_excel(writer, sheet_name='Sheet2', index=False)
+
+print("Dataframes consolidated successfully in the spreadsheet.")
